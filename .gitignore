@@ -1,0 +1,16 @@
+# Virtual Environment
+cnn_venv/
+venv/
+__pycache__/
+
+# Large Data and Model Files
+# Do NOT upload these to GitHub.
+# We will explain in the README how to get them.
+dataset/
+*.keras
+*.h5
+
+# IDE and OS files
+.vscode/
+.idea/
+*.DS_Store

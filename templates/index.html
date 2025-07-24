@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fruit Classifier</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background-color: #f7f7f7; }
+        .container { text-align: center; background: white; padding: 40px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        h1 { color: #333; }
+        input[type="file"] { margin: 20px 0; }
+        button { background-color: #007aff; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-size: 16px; cursor: pointer; transition: background-color 0.2s; }
+        button:hover { background-color: #0056b3; }
+        #result { margin-top: 20px; font-size: 24px; color: #007aff; font-weight: bold; min-height: 30px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Upload a Fruit Image</h1>
+        <form id="upload-form">
+            <input type="file" id="file-input" name="file" accept="image/*">
+            <br>
+            <button type="submit">Predict</button>
+        </form>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const form = document.getElementById('upload-form');
+        const fileInput = document.getElementById('file-input');
+        const resultDiv = document.getElementById('result');
+
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault(); // Prevent the form from submitting the traditional way
+
+            if (!fileInput.files[0]) {
+                resultDiv.textContent = 'Please select a file!';
+                return;
+            }
+
+            resultDiv.textContent = 'Predicting...';
+
+            const formData = new FormData();
+            formData.append('file', fileInput.files[0]);
+
+            try {
+                const response = await fetch('/predict', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+
+                if (data.error) {
+                    resultDiv.textContent = `Error: ${data.error}`;
+                } else {
+                    resultDiv.textContent = `${data.prediction}`;
+                }
+
+            } catch (error) {
+                resultDiv.textContent = 'An error occurred. Please try again.';
+                console.error('Error:', error);
+            }
+        });
+    </script>
+</body>
+</html>
