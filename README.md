@@ -1,60 +1,106 @@
-🍎 Fruit Image Classifier 🍌
-This project is a deep learning-based image classifier built with Python and TensorFlow/Keras. It demonstrates a complete machine learning pipeline, from data loading and model training to deployment via a simple web application using Flask.
+# 🍎 Fruit Image Classifier 🍌
 
-The primary model is a simple Convolutional Neural Network (CNN) built from scratch.
+This project is an end-to-end machine learning application designed to classify images of fruits. It uses a Convolutional Neural Network (CNN) built with Python and TensorFlow/Keras to analyze images and provides a prediction through a simple web interface.
 
-Model Limitations: A Note on Generalization
-This simple CNN model was trained on the "Fruits 360" dataset, which is very "clean"—all images have a plain white background and consistent lighting.
+The project demonstrates the entire machine learning pipeline, from data preparation and model training to deployment via a local web server.
 
-As a result, the model is highly accurate at recognizing images from that specific dataset. However, it performs poorly on real-world images that have different backgrounds, angles, or lighting conditions. This project serves as an excellent demonstration of the challenge of generalization in machine learning and highlights why techniques like data augmentation or transfer learning are necessary for building robust, real-world applications.
+---
 
-How to Run This Project
-Follow these steps to get the project running on your local machine.
+## Features
 
-1. Clone the Repository
+* **Fruit Classification:** Identifies over 200 different types of fruits from an uploaded image.
+* **Simple Web Interface:** A clean, user-friendly UI built with Flask to test the model in real-time.
+* **CNN from Scratch:** The model is a Convolutional Neural Network built and trained from the ground up to demonstrate foundational deep learning concepts.
+* **Performance Visualization:** After training, the script automatically generates plots showing the model's accuracy and loss over time.
 
-git clone https://github.com/Segniniii/fruit-classifier-app.git
-cd fruit-classifier-app
+---
 
-2. Set Up the Environment
-It is highly recommended to use a virtual environment.
+## How It Works
 
-# Create a virtual environment
-python -m venv cnn_venv
+The project is broken down into several key stages:
 
-# Activate it (on Windows)
-.\cnn_venv\Scripts\activate
+1.  **Data Preparation:** The model is trained on the **Fruits 360** dataset from Kaggle. This dataset contains over 90,000 images across 206 classes, with each image being 100x100 pixels on a clean white background. The script loads this data and splits it into training (80%) and validation (20%) sets.
 
-# Install the required libraries
-pip install -r requirements.txt
+2.  **Model Training:** A simple `Sequential` CNN model is built using Keras. It consists of several convolutional and max-pooling layers to extract features from the images, and dense layers for the final classification. The model is trained on the dataset to learn the distinguishing features of each fruit.
 
-3. Get the Dataset
-This project uses the Fruits 360 dataset from Kaggle. The model was trained on the version with 206 fruit classes.
+3.  **API Development:** A Flask server (`app.py`) provides a `/predict` endpoint. This endpoint receives an image, preprocesses it to match the training format, feeds it to the trained model, and returns a JSON response with the predicted fruit name and a confidence score.
 
-Download the dataset from this link.
+### Model Performance & Limitations
 
-Unzip the file and find the folder named fruits-360_100x100.
+The model achieves a high validation accuracy of over 99% on the test dataset.
 
-Place this folder inside the project directory and rename it to dataset.
+<img width="1185" height="499" alt="image" src="https://github.com/user-attachments/assets/3e847780-935f-480c-a310-a272841c0303" />
 
-4. Train the Model (Optional)
-The trained model (simple_cnn_model.keras) is included in this repository. However, if you wish to train it yourself, you can run the training script:
 
-python train_simple_cnn.py
+However, because the model was trained exclusively on "clean" images with white backgrounds, it struggles to generalize to real-world photos with varied backgrounds, lighting, and angles. This project serves as an excellent demonstration of the challenges in creating robust, real-world ML systems.
 
-5. Run the Web Application
+---
 
-python app.py
+## Tech Stack
 
-After running the command, open your web browser and navigate to http://127.0.0.1:5000. You can now upload an image to get a prediction.
+* **Backend:** Python, Flask
+* **Machine Learning:** TensorFlow / Keras, NumPy
+* **Image Processing:** Pillow
+* **Data Visualization:** Matplotlib
+* **Frontend:** HTML, JavaScript
 
-Technologies Used
-Python
+---
 
-TensorFlow / Keras for building and training the deep learning model.
+## How to Run Locally
 
-Flask for the web application backend.
+**Prerequisites:**
+* Python 3.9+
+* `pip` and `venv`
 
-Pillow & NumPy for image manipulation and numerical operations.
+**Instructions:**
 
-Matplotlib for visualizing training results.
+1.  **Clone the repository:**
+    ```bash
+    git clone [https://github.com/Segniniii/fruit-classifier-app.git](https://github.com/Segniniii/fruit-classifier-app.git)
+    cd fruit-classifier-app
+    ```
+
+2.  **Create and activate a virtual environment:**
+    ```bash
+    # For Windows
+    python -m venv cnn_venv
+    .\cnn_venv\Scripts\activate
+    ```
+
+3.  **Install the required dependencies:**
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+4.  **Get the Dataset:**
+    * Download the dataset from the [Fruits 360 page on Kaggle](https://www.kaggle.com/datasets/moltean/fruits).
+    * Unzip the file and find the folder named `fruits-360_100x100`.
+    * Place this folder inside the project directory and rename it to `dataset`.
+
+5.  **Train the Model (Optional):**
+    The trained model (`simple_cnn_model.keras`) isn't included in this repository. To train it yourself, run:
+    ```bash
+    python train_simple_cnn.py
+    ```
+
+6.  **Run the Flask application:**
+    ```bash
+    python app.py
+    ```
+
+7.  Open your web browser and navigate to `http://127.0.0.1:5000`.
+
+---
+
+## Project Structure
+
+```
+.
+├── dataset/                    # (Not in repo) Contains the fruit images
+├── templates/
+│   └── index.html              # Frontend HTML and JavaScript
+├── .gitignore                  # Files and folders to ignore by Git
+├── app.py                      # Flask application with API endpoints
+├── requirements.txt            # Project dependencies
+├── train_simple_cnn.py         # Script to train the model
+└── simple_cnn_model.keras      # (Not in repo) The trained model file
