@@ -77,7 +77,7 @@ However, because the model was trained exclusively on "clean" images with white 
     * Unzip the file and find the folder named `fruits-360_100x100`.
     * Place this folder inside the project directory and rename it to `dataset`.
 
-5.  **Train the Model (Optional):**
+5.  **Train the Model:**
     The trained model (`simple_cnn_model.keras`) isn't included in this repository. To train it yourself, run:
     ```bash
     python train_simple_cnn.py
